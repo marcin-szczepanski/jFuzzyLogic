@@ -1,4 +1,4 @@
-package net.sourceforge.jFuzzyLogic.test.performance;
+package net.sourceforge.jFuzzyLogic.performance;
 
 public class PerformanceTester {
 

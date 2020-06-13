@@ -1,11 +1,11 @@
-package net.sourceforge.jFuzzyLogic.test.performance;
-
-import java.util.ArrayList;
-import java.util.List;
+package net.sourceforge.jFuzzyLogic.performance;
 
 import net.sourceforge.jFuzzyLogic.FIS;
 import net.sourceforge.jFuzzyLogic.FunctionBlock;
 import net.sourceforge.jFuzzyLogic.Gpr;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestExecutioner {
 

@@ -1,11 +1,6 @@
-package net.sourceforge.jFuzzyLogic.test.performance;
-
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.util.List;
+package net.sourceforge.jFuzzyLogic.performance;
 
 import net.sourceforge.jFuzzyLogic.plot.PlotWindow;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -14,6 +9,9 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+
+import java.awt.*;
+import java.util.List;
 
 public class PerformanceChart {
 

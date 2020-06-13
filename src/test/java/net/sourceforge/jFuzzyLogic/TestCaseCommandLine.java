@@ -1,13 +1,11 @@
-package net.sourceforge.jFuzzyLogic.testCases;
+package net.sourceforge.jFuzzyLogic;
 
 import junit.framework.TestCase;
-import net.sourceforge.jFuzzyLogic.FIS;
-import net.sourceforge.jFuzzyLogic.Gpr;
-import net.sourceforge.jFuzzyLogic.JFuzzyLogic;
-
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class TestCaseCommandLine extends TestCase {
 
 	public static final double EPSILON = 1e-6;

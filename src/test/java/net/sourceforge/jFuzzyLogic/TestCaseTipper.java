@@ -1,14 +1,12 @@
-package net.sourceforge.jFuzzyLogic.testCases;
+package net.sourceforge.jFuzzyLogic;
 
 import junit.framework.TestCase;
-import net.sourceforge.jFuzzyLogic.FIS;
-import net.sourceforge.jFuzzyLogic.FunctionBlock;
-import net.sourceforge.jFuzzyLogic.Gpr;
-
 import org.antlr.runtime.RecognitionException;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class TestCaseTipper extends TestCase {
 
 	public static final double EPSILON = 0.001; // Error tolerated

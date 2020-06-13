@@ -5,14 +5,12 @@
  *
  * @author pcingola@users.sourceforge.net
  */
-package net.sourceforge.jFuzzyLogic.testCases;
+package net.sourceforge.jFuzzyLogic;
 
 import junit.framework.TestCase;
-import net.sourceforge.jFuzzyLogic.FIS;
-import net.sourceforge.jFuzzyLogic.Gpr;
 import net.sourceforge.jFuzzyLogic.rule.Variable;
-
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -21,6 +19,8 @@ import org.junit.Test;
  * @author pcingola@users.sourceforge.net
  *
  */
+
+@Ignore
 public class TestCaseZzz extends TestCase {
 
 	static double EPSILON = 0.000001; // A small number

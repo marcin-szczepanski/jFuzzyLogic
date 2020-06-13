@@ -1,11 +1,10 @@
-package net.sourceforge.jFuzzyLogic.testCases;
+package net.sourceforge.jFuzzyLogic;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import net.sourceforge.jFuzzyLogic.testCases.TestCaseCommandLine;
-import net.sourceforge.jFuzzyLogic.testCases.TestCaseJfuzzy;
-import net.sourceforge.jFuzzyLogic.testCases.TestCaseTipper;
+import org.junit.Ignore;
 
+@Ignore
 public class TestSuiteAll {
 
 	public static void main(String args[]) {

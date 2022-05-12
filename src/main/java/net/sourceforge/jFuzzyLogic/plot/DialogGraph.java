@@ -45,6 +45,7 @@ public class DialogGraph extends JDialog {
 		dg.setLayout(new BorderLayout());
 		dg.getContentPane().add(dg.panel, BorderLayout.CENTER);
 		dg.setVisible(true);
+		dg.setResizable(true);
 		nextPosition(width, height);
 		return dg;
 	}

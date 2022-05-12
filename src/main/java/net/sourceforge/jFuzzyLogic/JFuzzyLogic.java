@@ -1,5 +1,6 @@
 package net.sourceforge.jFuzzyLogic;
 
+import net.sourceforge.jFuzzyLogic.ruleConnectionMethod.Szczepanski;
 import org.antlr.runtime.RecognitionException;
 
 import net.sourceforge.jFuzzyLogic.demo.tipper.TipperAnimation;
@@ -20,10 +21,10 @@ public class JFuzzyLogic {
 	// Version info
 	public static final String SOFTWARE_NAME = "JFuzzyLogic";
 	public static final String REVISION = "";
-	public static final String BUILD = "2015-04-09";
-	public static final String VERSION_MAJOR = "3.3";
+	public static final String BUILD = "2022-05-12";
+	public static final String VERSION_MAJOR = "4.0";
 	public static final String VERSION_SHORT = VERSION_MAJOR + REVISION;
-	public static final String VERSION_NO_NAME = VERSION_SHORT + " (build " + BUILD + "), by " + Pcingola.BY;
+	public static final String VERSION_NO_NAME = VERSION_SHORT + " (build " + BUILD + "), by " + Pcingola.BY + " and " + Szczepanski.BY;
 	public static final String VERSION = SOFTWARE_NAME + " " + VERSION_NO_NAME;
 
 	public static boolean debug = false;

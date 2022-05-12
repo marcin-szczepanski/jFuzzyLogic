@@ -148,7 +148,7 @@ public abstract class RuleActivationMethod extends FclObject {
 			out.append("\t\t\tdouble y = " + toStringCpp() + "( " + degreeOfSupportName + " , membership );\n");
 
 			// Aggregate value
-			out.append("\t\t\t" + variable.toStringCppDefuzzifyVarName() + "[i] += " + ruleAccumulationMethod.toStringCpp() + "( " + variable.toStringCppDefuzzifyVarName() + "[i], y );\n");
+			out.append("\t\t\t" + variable.toStringCppDefuzzifyVarName() + "[i] = " + ruleAccumulationMethod.toStringCpp() + "( " + variable.toStringCppDefuzzifyVarName() + "[i], y );\n");
 			out.append("\t\t}\n");
 			out.append("\t}\n");
 		}

@@ -84,7 +84,7 @@ void FunctionBlock_tipper::calc_No1() {
 			double x = 0.0 + i * 0.03;
 			double membership = membership_tip_cheap(x);
 			double y = ruleActivationMethod_min( degreeOfSupport_1 , membership );
-			defuzzify_tip[i] += ruleAccumulationMethod_max( defuzzify_tip[i], y );
+			defuzzify_tip[i] = ruleAccumulationMethod_max( defuzzify_tip[i], y );
 		}
 	}
 
@@ -95,7 +95,7 @@ void FunctionBlock_tipper::calc_No1() {
 			double x = 0.0 + i * 0.03;
 			double membership = membership_tip_average(x);
 			double y = ruleActivationMethod_min( degreeOfSupport_2 , membership );
-			defuzzify_tip[i] += ruleAccumulationMethod_max( defuzzify_tip[i], y );
+			defuzzify_tip[i] = ruleAccumulationMethod_max( defuzzify_tip[i], y );
 		}
 	}
 
@@ -106,7 +106,7 @@ void FunctionBlock_tipper::calc_No1() {
 			double x = 0.0 + i * 0.03;
 			double membership = membership_tip_generous(x);
 			double y = ruleActivationMethod_min( degreeOfSupport_3 , membership );
-			defuzzify_tip[i] += ruleAccumulationMethod_max( defuzzify_tip[i], y );
+			defuzzify_tip[i] = ruleAccumulationMethod_max( defuzzify_tip[i], y );
 		}
 	}
 

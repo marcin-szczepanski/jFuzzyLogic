@@ -15,28 +15,38 @@ public class DefuzzifierMeanMax extends DefuzzifierContinuous {
 	/** Deffuzification function */
 	@Override
 	public double defuzzify() {
+		/**
+		 * Fixes:
+		 * @author mdsflyboy
+		 */
+
 		double max = 0, maxX = 0;
-		int count = 0;
 
 		// Calculate max
-		for( int i = 0; i < values.length; i++ ) {
-			if( values[i] >= max ) max = values[i];
+		for (double value : values) {
+			if (value >= max)
+				max = value;
 		}
 
 		// No max? => this variable has no active antecedent
-		if( max <= 0 ) return Double.NaN;
+		if (max <= 0) return Double.NaN;
 
 		// Calculate mean of max
-		for( int i = 0; i < values.length; i++ ) {
-			if( values[i] == max ) {
-				maxX += min + stepSize * i;
-				count++;
+		boolean isFirstMax = false;
+		int startOfMax = 0;
+		for (int i = 0; i < values.length; i++) {
+			if (values[i] == max) {
+				if (!isFirstMax){
+					isFirstMax = true;
+					startOfMax = i;
+				}
+				maxX = i;
 			}
 		}
 
 		// Return mean of max
-		return maxX / count;
-
+		int middleI = (int) ((maxX + startOfMax) / 2);
+		return min + stepSize * middleI;
 	}
 
 	@Override

@@ -188,6 +188,24 @@ public class Rule extends FclObject implements CompileCpp {
 	}
 
 	@Override
+	public String toStringJS() {
+		RuleActivationMethod ruleActivationMethod = ruleBlock.getRuleActivationMethod();
+
+		StringBuilder sb = new StringBuilder();
+
+		// Show antecedents
+		String dosName = "degreeOfSupport_" + name;
+		sb.append("\t\tlet " + dosName + " = " + weight + " * (" + antecedents.toStringJS() + ");\n");
+
+		// Accumulate & activate
+		RuleAccumulationMethod ruleAccumulationMethod = ruleBlock.getRuleAccumulationMethod();
+		for (RuleTerm term : consequents)
+			sb.append(ruleActivationMethod.toStringJS(term, ruleAccumulationMethod, dosName) + "\n");
+
+		return sb.toString();
+	}
+
+	@Override
 	public String toStringFcl() {
 		String strAnt = "", strCon = "";
 

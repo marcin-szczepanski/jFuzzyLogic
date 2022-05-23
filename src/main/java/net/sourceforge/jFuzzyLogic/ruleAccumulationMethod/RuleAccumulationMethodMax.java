@@ -24,6 +24,11 @@ public class RuleAccumulationMethodMax extends RuleAccumulationMethod {
 		return "double " + toStringCpp() + "(double defuzzifierValue, double valueToAggregate)\t{ return ( defuzzifierValue > valueToAggregate ? defuzzifierValue : valueToAggregate ); }\n";
 	}
 
+	@Override
+	public String toStringJSFunction() {
+		return "function " + toStringJS() + "(defuzzifierValue, valueToAggregate) {\n\treturn (defuzzifierValue > valueToAggregate ? defuzzifierValue : valueToAggregate);\n}\n";
+	}
+
 	/**
 	 * @see net.sourceforge.jFuzzyLogic.ruleAccumulationMethod.RuleAccumulationMethod#toStringFcl()
 	 */

@@ -157,6 +157,17 @@ public class MembershipFunctionPieceWiseLinear extends MembershipFunctionContinu
 		return sb.toString();
 	}
 
+	@Override
+	public String toStringJS() {
+		StringBuilder sb = new StringBuilder();
+		int i, len = x.length;
+		sb.append("\t\tif (x <= " + x[0].getValue() + ")\t\treturn " + y[0].getValue() + ";\n");
+		sb.append("\t\tif (x > " + x[len - 1].getValue() + ")\t\treturn " + y[len - 1].getValue() + ";\n");
+		for (i = 1; i < len; i++)
+			sb.append("\t\tif (x <= " + x[i].getValue() + ")\t\treturn " + y[i - 1].getValue() + " + (" + y[i].getValue() + " - " + y[i - 1].getValue() + ") * ((x - " + x[i - 1].getValue() + ") / (" + x[i].getValue() + " - " + x[i - 1].getValue() + "));\n");
+		return sb.toString();
+	}
+
 	/** FCL representation */
 	@Override
 	public String toStringFcl() {

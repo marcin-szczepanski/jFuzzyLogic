@@ -86,6 +86,7 @@
           <a class="list-group-item" href="#using">Using jFuzzyLogic in projects</a>
           <a class="list-group-item" href="#plugin">Eclipse plug-in</a>
           <a class="list-group-item" href="#compiler">FCL compiler</a>
+          <a class="list-group-item" href="#compilerJS">FCL compiler (JavaScript)</a>
           <a class="list-group-item" href="#optim">Parameter optimization</a>
         </ul>
       </div>
@@ -956,11 +957,32 @@ java -jar jFuzzyLogic.jar -c tipper.fcl > tipper.cpp
         </p>
         </section>
 
+        <section id="compilerJS">
+          <div class="page-header">
+            <h1>10. FCL compiler (JavaScript)</h1>
+          </div>
+        <p class="lead">
+        jFuzzyLogic can compile FCL into JavaScript code.
+        </p>
+        <p>
+        A built in compiler allows to compiler FCL code into JavaScript.
+        For instance, by simply running the following command, we can create a JavaScript program that has the same functionality as the FCL program:
+<pre>
+java -jar jFuzzyLogic.jar -j tipper.fcl > tipper.js
+</pre>
+
+        The previous command creates <a href="fcl/tipper.js">this JavaScript code</a>.
+        <br>
+        <br>
+        <img src="images/js.png">
+        </p>
+        </section>
+
         <!-- Parameter optimization
         ================================================== -->
         <section id="optim">
           <div class="page-header">
-            <h1>10. Parameter optimization</h1>
+            <h1>11. Parameter optimization</h1>
           </div>
 				<p class="lead">
         jFuzzyLogic provides a parameter optimization framework, allowing to learn or refine fuzzy parameters using machine learning algorithms.

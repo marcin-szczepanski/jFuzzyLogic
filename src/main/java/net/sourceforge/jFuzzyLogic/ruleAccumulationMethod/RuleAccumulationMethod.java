@@ -49,8 +49,17 @@ public abstract class RuleAccumulationMethod extends FclObject {
 		return "ruleAccumulationMethod_" + getName();
 	}
 
+	@Override
+	public String toStringJS() {
+		return "ruleAccumulationMethod_" + getName();
+	}
+
 	public String toStringCppFunction() {
-		throw new RuntimeException("Unimplemented method foe class " + this.getClass().getCanonicalName());
+		throw new RuntimeException("Unimplemented method for class " + this.getClass().getCanonicalName());
+	}
+
+	public String toStringJSFunction() {
+		throw new RuntimeException("Unimplemented method for class " + this.getClass().getCanonicalName());
 	}
 
 	@Override

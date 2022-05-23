@@ -73,7 +73,18 @@ public class RuleTerm extends FclObject {
 		return neg + variable.getName() + "_" + termName;
 	}
 
+	@Override
+	public String toStringJS() {
+		String neg = "";
+		if (negated) neg = "1 -";
+		return neg + "this." + variable.getName() + "_" + termName;
+	}
+
 	public String toStringCppDeffName() {
+		return getVariable().getName() + "_" + getTermName();
+	}
+
+	public String toStringJSDeffName() {
 		return getVariable().getName() + "_" + getTermName();
 	}
 

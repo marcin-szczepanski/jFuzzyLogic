@@ -339,6 +339,27 @@ public class Variable extends FclObject implements Comparable<Variable>, Iterabl
 	}
 
 	@Override
+	public String toStringJS() {
+		String str = name + " : \n";
+
+		// Show defuzifier for "output" variables, value for "input" variables
+		if (defuzzifier != null) str += "\tDefuzzifier : " + defuzzifier.toString() + "\n\tLatest defuzzified value: " + latestDefuzzifiedValue + "\n";
+		else str += "\tValue: " + value + "\n";
+
+		if (!Double.isNaN(defaultValue)) str += "\tDefault value: " + defaultValue + "\n";
+
+		// Show each 'termName' and it's membership function
+		for (LinguisticTerm linguisticTerm : this)
+			str += "\t" + linguisticTerm.toString(value) + "\n";
+
+		return str;
+	}
+
+	public String toStringJSDefuzzifyVarName() {
+		return "defuzzify_" + getName();
+	}
+
+	@Override
 	public String toStringFcl() {
 		return name;
 	}

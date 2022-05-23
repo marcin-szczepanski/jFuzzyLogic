@@ -117,6 +117,18 @@ public abstract class MffFunction extends FclObject {
 	}
 
 	@Override
+	public String toStringJS() {
+		if (terms == null) return "";
+		String out = this.getClass().getSimpleName() + "(";
+		for (int i = 0; i < terms.length; i++) {
+			out += terms[i].toStringFcl();
+			if (i < terms.length - 1) out += ", ";
+		}
+
+		return out + ")";
+	}
+
+	@Override
 	public String toStringFcl() {
 		if (terms == null) return "";
 		String out = this.getClass().getSimpleName() + "(";

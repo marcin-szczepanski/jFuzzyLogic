@@ -22,6 +22,11 @@ public class RuleActivationMethodMin extends RuleActivationMethod {
 		return "double " + toStringCpp() + "(double degreeOfSupport, double membership)\t{ return (degreeOfSupport < membership ? degreeOfSupport : membership); }\n";
 	}
 
+	@Override
+	public String toStringJSFunction() {
+		return "function " + toStringJS() + "(degreeOfSupport, membership) {\n\treturn (degreeOfSupport < membership ? degreeOfSupport : membership);\n}\n";
+	}
+
 	/** Printable FCL version */
 	@Override
 	public String toStringFcl() {

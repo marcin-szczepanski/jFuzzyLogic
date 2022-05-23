@@ -52,6 +52,27 @@ public class DefuzzifierCenterOfGravity extends DefuzzifierContinuous {
 	}
 
 	@Override
+	public String toStringJS() {
+		StringBuilder out = new StringBuilder();
+
+		String defuzzName = "defuzzify_" + variable.getName();
+		String sumName = "sum_" + variable.getName();
+		String wsumName = "wsum_" + variable.getName();
+
+		out.append("\t\tlet " + sumName + " = 0.0;\n");
+		out.append("\t\tlet " + wsumName + " = 0.0;\n");
+		out.append("\t\tlet x;\n");
+
+		out.append("\t\tfor (let i = 0; i < " + getLength() + "; i++) {\n");
+		out.append("\t\t\tx = " + min + " + i * " + stepSize + ";\n");
+		out.append("\t\t\t" + sumName + " += this." + defuzzName + "[i];\n");
+		out.append("\t\t\t" + wsumName + " += x * this." + defuzzName + "[i];\n");
+		out.append("\t\t}\n");
+		out.append("\t\tthis." + variable.getName() + " = " + wsumName + " / " + sumName + ";\n");
+		return out.toString();
+	}
+
+	@Override
 	public String toStringFcl() {
 		return "METHOD : COG;";
 	}

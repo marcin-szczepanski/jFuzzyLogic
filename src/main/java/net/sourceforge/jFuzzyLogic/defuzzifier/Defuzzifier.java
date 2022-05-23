@@ -68,4 +68,9 @@ public abstract class Defuzzifier extends FclObject {
 	public String toStringCpp() {
 		throw new RuntimeException("Unimplemented method for class " + this.getClass().getCanonicalName());
 	}
+
+	@Override
+	public String toStringJS() {
+		throw new RuntimeException("Unimplemented method for class " + this.getClass().getCanonicalName());
+	}
 }

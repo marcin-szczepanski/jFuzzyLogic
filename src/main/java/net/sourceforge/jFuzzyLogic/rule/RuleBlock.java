@@ -441,6 +441,28 @@ public class RuleBlock extends FclObject implements Iterable<Rule>, Comparable<R
 		return rb.toString();
 	}
 
+	public String toStringJS() {
+		StringBuffer rb = new StringBuffer();
+		rb.append("\t// RULEBLOCK " + name + "\n");
+		rb.append("\tcalc_" + name + "() {\n");
+
+		// Show rules
+		int ruleNum = 1;
+		for (Rule rule : rules) {
+			// Rule name/number
+			String name = rule.getName();
+			if ((name == null) || (name.equals(""))) name = Integer.toString(ruleNum);
+
+			rb.append("\t\t// RULE " + name + " : " + rule.toStringFcl() + "\n");
+			rb.append(rule.toStringJS());
+			ruleNum++;
+		}
+
+		rb.append("\t}\n");
+
+		return rb.toString();
+	}
+
 	@Override
 	public String toStringFcl() {
 		StringBuffer rb = new StringBuffer();

@@ -111,6 +111,11 @@ public abstract class MembershipFunction extends FclObject {
 	}
 
 	@Override
+	public String toStringJS() {
+		throw new RuntimeException("Unimplemented method 'toStringJS()' for class " + this.getClass().getCanonicalName());
+	}
+
+	@Override
 	public String toStringFcl() {
 		return getName();
 	}

@@ -32,6 +32,11 @@ public class RuleConnectionMethodOrMax extends RuleConnectionMethod {
 	}
 
 	@Override
+	public String toStringJSFunction() {
+		return "function " + toStringJS() + "(antecedent1, antecedent2) {\n\treturn (antecedent1 > antecedent2 ? antecedent1 : antecedent2);\n}\n";
+	}
+
+	@Override
 	public String toStringFcl() {
 		return "OR: MAX;";
 	}

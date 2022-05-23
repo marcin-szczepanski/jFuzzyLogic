@@ -238,6 +238,35 @@ public class RuleExpression extends FclObject implements Iterable<Variable>, Com
 	}
 
 	@Override
+	public String toStringJS() {
+		String str = "";
+		String connector = ruleConnectionMethod.toStringJS();
+
+		if ((term1 == null) || (term2 == null)) {
+			// Only one term?
+			if (term1 != null) str += term1.toStringJS();
+			if (term2 != null) str += term2.toStringJS();
+		} else {
+			str += connector + "(";
+
+			// Both terms connected
+			if (isFuzzyRuleExpression(term1)) str += ((RuleExpression) term1).toStringJS();
+			else if (isFuzzyRuleTerm(term1)) str += ((RuleTerm) term1).toStringJS();
+
+			str += ", ";
+
+			if (isFuzzyRuleExpression(term2)) str += ((RuleExpression) term2).toStringJS();
+			else if (isFuzzyRuleTerm(term2)) str += ((RuleTerm) term2).toStringJS();
+
+			str += ")";
+		}
+
+		if (negated) str = "1.0 - (" + str + ")";
+
+		return str;
+	}
+
+	@Override
 	public String toStringFcl() {
 		String str = "";
 		String connector = " " + ruleConnectionMethod.getName().toUpperCase() + " ";

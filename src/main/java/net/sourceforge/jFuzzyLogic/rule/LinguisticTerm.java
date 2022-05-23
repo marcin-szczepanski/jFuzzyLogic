@@ -59,7 +59,19 @@ public class LinguisticTerm extends FclObject implements Comparable<LinguisticTe
 		return sb.toString();
 	}
 
+	public String toStringJS(Variable var) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\t" + toStringJSMethodName(var) + "(x) {\n");
+		sb.append(membershipFunction.toStringJS());
+		sb.append("\t}\n");
+		return sb.toString();
+	}
+
 	public String toStringCppMethodName(Variable var) {
+		return "membership_" + var.getName() + "_" + getTermName();
+	}
+
+	public String toStringJSMethodName(Variable var) {
 		return "membership_" + var.getName() + "_" + getTermName();
 	}
 

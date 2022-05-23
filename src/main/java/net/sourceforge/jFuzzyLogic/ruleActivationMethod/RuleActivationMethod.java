@@ -157,7 +157,49 @@ public abstract class RuleActivationMethod extends FclObject {
 	}
 
 	public String toStringCppFunction() {
-		throw new RuntimeException("Unimplemented method foe class " + this.getClass().getCanonicalName());
+		throw new RuntimeException("Unimplemented method for class " + this.getClass().getCanonicalName());
+	}
+
+	@Override
+	public String toStringJS() {
+		return "ruleActivationMethod_" + name;
+	}
+
+	public String toStringJS(RuleTerm fuzzyRuleTerm, RuleAccumulationMethod ruleAccumulationMethod, String degreeOfSupportName) {
+		StringBuilder out = new StringBuilder();
+
+		Variable variable = fuzzyRuleTerm.getVariable();
+		Defuzzifier defuzzifier = variable.getDefuzzifier();
+
+		if (fuzzyRuleTerm.getMembershipFunction().isDiscrete()) {
+			throw new RuntimeException("Unimplemented for discre cases!");
+		} else {
+			//---
+			// Continuous case
+			//---
+			DefuzzifierContinuous defuzzifierContinuous = (DefuzzifierContinuous) defuzzifier;
+
+			// Add membership function to defuzzifier
+			out.append("\t\tif (" + degreeOfSupportName + " > 0) {\n");
+			out.append("\t\t\tfor (let i = 0; i < " + defuzzifierContinuous.getLength() + "; i++) {\n");
+			out.append("\t\t\t\tlet x = " + defuzzifierContinuous.getMin() + " + i * " + defuzzifierContinuous.getStepSize() + ";\n");
+			// Is term negated?
+			if (fuzzyRuleTerm.isNegated()) out.append("\t\t\tlet membership = 1 - mf.membership(x);\n");
+			else out.append("\t\t\t\tlet membership = this." + fuzzyRuleTerm.getLinguisticTerm().toStringJSMethodName(fuzzyRuleTerm.getVariable()) + "(x);\n");
+
+			out.append("\t\t\t\tlet y = " + toStringJS() + "(" + degreeOfSupportName + " , membership);\n");
+
+			// Aggregate value
+			out.append("\t\t\t\tthis." + variable.toStringJSDefuzzifyVarName() + "[i] = " + ruleAccumulationMethod.toStringJS() + "(this." + variable.toStringJSDefuzzifyVarName() + "[i], y);\n");
+			out.append("\t\t\t}\n");
+			out.append("\t\t}\n");
+		}
+
+		return out.toString();
+	}
+
+	public String toStringJSFunction() {
+		throw new RuntimeException("Unimplemented method for class " + this.getClass().getCanonicalName());
 	}
 
 }

@@ -741,6 +741,131 @@ public class FunctionBlock extends FclObject implements Iterable<RuleBlock>, Com
 	}
 
 	@Override
+	public String toStringJS() {
+		StringBuffer calcMethod = new StringBuffer(); // Method calc()
+		StringBuffer constructor = new StringBuffer(); // Constructor
+		StringBuffer defuzzifyMethod = new StringBuffer(); // Method defuzzify()
+		StringBuffer fuzzifyMethod = new StringBuffer(); // Fuzzify method
+		StringBuffer membershipMethods = new StringBuffer(); // All membership functions
+		StringBuffer printMethod = new StringBuffer(); // Method print()
+		StringBuffer resetMethod = new StringBuffer(); // Method reset()
+		StringBuffer varDefuzzifiers = new StringBuffer(); // All defuzzifier variables
+		StringBuffer varsFuzzify = new StringBuffer(); // Fuzzify variables
+		StringBuffer varsIn = new StringBuffer(); // Input vars
+		StringBuffer varsOut = new StringBuffer(); // Output vars
+
+		varsIn.append("\t// VAR_INPUT\n");
+		varsOut.append("\t// VAR_OUTPUT\n");
+
+		// Methods
+		String className = "FunctionBlock_" + name;
+		calcMethod.append("\t// Calculate function block\n\tcalc() {\n\t\tthis.reset();\n\t\tthis.fuzzify();\n");
+		constructor.append("\t// Constructor\n\tconstructor() {\n");
+		defuzzifyMethod.append("\t// Defuzzify \n\tdefuzzify() {\n");
+		fuzzifyMethod.append("\t// Fuzzify all variables\n\tfuzzify() {\n");
+		membershipMethods.append("\t// Membership functions \n");
+		printMethod.append("\t// Print \n\tprint() {\n\t\tconsole.log(\"Function block " + name + ":\\n\");\n");
+		resetMethod.append("\t// Reset output\n\treset() {\n");
+
+		//---
+		// Show variables (sorted by name)
+		//---
+		for (Variable var : variablesSorted()) {
+			var.estimateUniverse();
+
+			if (!Double.isNaN(var.getDefaultValue())) constructor.append("\t\tthis." + var.getName() + " = " + var.getDefaultValue() + ";\n");
+
+			if (var.isInput()) {
+				// Add input variables
+				varsIn.append("\t" + var.getName());
+				varsIn.append(";\n");
+
+				// Add to print method
+				printMethod.append("\t\tconsole.log(\"\tInput  %s: %f\\n\", \"" + var.getName() + "\" , this." + var.getName() + ");\n");
+
+				// Add fuzzyfiers
+				varsFuzzify.append("\t// FUZZIFY " + var.getName() + "\n");
+				for (LinguisticTerm linguisticTerm : var.linguisticTermsSorted()) {
+					String ltVar = var.getName() + "_" + linguisticTerm.getTermName();
+					varsFuzzify.append("\t" + ltVar + ";\n");
+					fuzzifyMethod.append("\t\tthis." + ltVar + " = this." + linguisticTerm.toStringJSMethodName(var) + "(this." + var.getName() + ");\n");
+
+					// Membership function
+					membershipMethods.append(linguisticTerm.toStringJS(var) + "\n");
+
+					// Add to print method
+					printMethod.append("\t\tconsole.log(\"\t       %s: %f\\n\", \"" + ltVar + "\" , this." + ltVar + ");\n");
+				}
+				varsFuzzify.append("\n");
+
+			} else {
+				int len = ((DefuzzifierContinuous) var.getDefuzzifier()).getLength();
+
+
+				constructor.append("\t\tthis." + var.toStringJSDefuzzifyVarName() + " = new Array(" + len + ");\n");
+
+				// Add output variables
+				varsOut.append("\t" + var.getName());
+				varsOut.append(";\n");
+
+				// Add to print method
+				printMethod.append("\t\tconsole.log(\"\tOutput %s: %f\\n\", \"" + var.getName() + "\" , this." + var.getName() + ");\n");
+
+				// Add defuzzyfier variable
+				varDefuzzifiers.append("\t// DEFUZZIFY " + var.getName() + "\n");
+				varDefuzzifiers.append("\t" + var.toStringJSDefuzzifyVarName() + ";\n");
+
+				// Add to reset method
+				resetMethod.append("\t\tfor (let i = 0 ; i < " + len + "; i++) {\n\t\t\tthis." + var.toStringJSDefuzzifyVarName() + "[i] = 0.0;\n\t\t}\n");
+
+				for (LinguisticTerm linguisticTerm : var.linguisticTermsSorted()) {
+					// Membership function
+					membershipMethods.append(linguisticTerm.toStringJS(var) + "\n");
+
+				}
+				varDefuzzifiers.append("\n");
+
+				defuzzifyMethod.append(var.getDefuzzifier().toStringJS());
+			}
+		}
+
+		//---
+		// Iterate over each ruleSet and append it to output string
+		// Sort ruleBlocks by name
+		//---
+		StringBuffer ruleBlocksStr = new StringBuffer();
+		for (RuleBlock ruleBlock : ruleBlocksSorted()) {
+			ruleBlocksStr.append(ruleBlock.toStringJS());
+			calcMethod.append("\t\tthis.calc_" + ruleBlock.getName() + "();\n");
+		}
+
+		constructor.append("\t}\n");
+		calcMethod.append("\t\tthis.defuzzify();\n\t}\n");
+		defuzzifyMethod.append("\t}\n");
+		fuzzifyMethod.append("\t}\n");
+		printMethod.append("\t}\n");
+		resetMethod.append("\t}\n");
+
+		// Build the whole thing
+		return "class FunctionBlock_" + name + " {\n\n" //
+				+ varsIn + "\n" //
+				+ varsOut //
+				+ "\n" //
+				+ varsFuzzify //
+				+ varDefuzzifiers //
+				+ constructor + "\n" //
+				+ calcMethod + "\n" //
+				+ ruleBlocksStr + "\n" //
+				+ defuzzifyMethod + "\n" //
+				+ fuzzifyMethod + "\n" //
+				+ membershipMethods + "\n" //
+				+ printMethod + "\n" //
+				+ resetMethod + "\n" //
+				+ "};\n\n" //
+				; //
+	}
+
+	@Override
 	public String toStringFcl() {
 		StringBuffer varsIn = new StringBuffer();
 		StringBuffer varsOut = new StringBuffer();

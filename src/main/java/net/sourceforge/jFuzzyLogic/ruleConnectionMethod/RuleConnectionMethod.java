@@ -40,8 +40,17 @@ public abstract class RuleConnectionMethod extends FclObject {
 		return "ruleConnectionMethod_" + name;
 	}
 
+	@Override
+	public String toStringJS() {
+		return "ruleConnectionMethod_" + name;
+	}
+
 	public String toStringCppFunction() {
-		throw new RuntimeException("Unimplemented method foe class " + this.getClass().getCanonicalName());
+		throw new RuntimeException("Unimplemented method for class " + this.getClass().getCanonicalName());
+	}
+
+	public String toStringJSFunction() {
+		throw new RuntimeException("Unimplemented method for class " + this.getClass().getCanonicalName());
 	}
 
 }

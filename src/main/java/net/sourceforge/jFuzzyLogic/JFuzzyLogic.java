@@ -1,6 +1,5 @@
 package net.sourceforge.jFuzzyLogic;
 
-import net.sourceforge.jFuzzyLogic.ruleConnectionMethod.Szczepanski;
 import org.antlr.runtime.RecognitionException;
 
 import net.sourceforge.jFuzzyLogic.demo.tipper.TipperAnimation;
@@ -24,7 +23,7 @@ public class JFuzzyLogic {
 	public static final String BUILD = "2022-05-12";
 	public static final String VERSION_MAJOR = "4.0";
 	public static final String VERSION_SHORT = VERSION_MAJOR + REVISION;
-	public static final String VERSION_NO_NAME = VERSION_SHORT + " (build " + BUILD + "), by " + Pcingola.BY + " and " + Szczepanski.BY;
+	public static final String VERSION_NO_NAME = VERSION_SHORT + " (build " + BUILD + "), by " + Pcingola.BY;
 	public static final String VERSION = SOFTWARE_NAME + " " + VERSION_NO_NAME;
 
 	public static boolean debug = false;
@@ -53,6 +52,21 @@ public class JFuzzyLogic {
 			String cfile = Gpr.HOME + "/x.cpp";
 			Gpr.debug("Writing to file " + cfile);
 			Gpr.toFile(cfile, fis.toStringCpp());
+		}
+	}
+
+	/**
+	 * Compile an FCL program into JavaScript
+	 */
+	void compileJS(String fileName) {
+		load(fileName); // Read FIS
+		System.out.println(fis.toStringJS()); // Show JS code
+
+		// Dump JS code to a file (debug)
+		if (debug) {
+			String jsfile = Gpr.HOME + "/x.js";
+			Gpr.debug("Writing to file " + jsfile);
+			Gpr.toFile(jsfile, fis.toStringJS());
 		}
 	}
 
@@ -170,6 +184,11 @@ public class JFuzzyLogic {
 				String fileName = args[++i];
 				compile(fileName);
 				return;
+			} else if (arg.equals("-j")) {
+				// Sanity check
+				String fileName = args[++i];
+				compileJS(fileName);
+				return;
 			} else if (arg.equals("-e")) {
 				evaluate(i + 1);
 				return;
@@ -202,11 +221,12 @@ public class JFuzzyLogic {
 
 		System.err.println("Usage: java -jar jFuzzyLogic.jar [-noCharts] [{-e|-c}] file.fcl [in_1 ... in_N]");
 		System.err.println("Options:");
-		System.err.println("\t file.fcl                      : Load FCL file and show memebership functions (default, when no option is provided).");
+		System.err.println("\t file.fcl                      : Load FCL file and show membership functions (default, when no option is provided).");
 		System.err.println("\t-c file.fcl                    : Compile. Generate C++ code from FCL file (to STDOUT)");
+		System.err.println("\t-j file.fcl                    : Compile. Generate JavaScript code from FCL file (to STDOUT)");
 		System.err.println("\t-e file.fcl in_1 in_2 ... in_N : Evaluate. Load FCL file, assign inputs i_1, i_2, ..., i_n and evaluate (variables sorted alphabetically).");
 		System.err.println("\t-noCharts                      : Use a mock class for charts. This is used when not compiled using JFreeCharts.");
-		System.err.println("\tdemo                           : Run a demo exmaple (tipper.fcl)");
+		System.err.println("\tdemo                           : Run a demo example (tipper.fcl)");
 		System.exit(1);
 	}
 }

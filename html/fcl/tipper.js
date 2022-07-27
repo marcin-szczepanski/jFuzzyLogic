@@ -100,6 +100,9 @@ class FunctionBlock_tipper {
 			sum_tip += this.defuzzify_tip[i];
 			wsum_tip += x * this.defuzzify_tip[i];
 		}
+		if (sum_tip == 0) {
+			sum_tip = 1.0;
+		}
 		this.tip = wsum_tip / sum_tip;
 	}
 

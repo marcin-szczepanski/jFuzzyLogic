@@ -68,6 +68,9 @@ public class DefuzzifierCenterOfGravity extends DefuzzifierContinuous {
 		out.append("\t\t\t" + sumName + " += this." + defuzzName + "[i];\n");
 		out.append("\t\t\t" + wsumName + " += x * this." + defuzzName + "[i];\n");
 		out.append("\t\t}\n");
+		out.append("\t\tif (" + sumName + " == 0) {\n");
+		out.append("\t\t\t" + sumName + " = 1.0;\n");
+		out.append("\t\t}\n");
 		out.append("\t\tthis." + variable.getName() + " = " + wsumName + " / " + sumName + ";\n");
 		return out.toString();
 	}

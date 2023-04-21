@@ -66,4 +66,11 @@ public class MembershipFunctionGaussian extends MembershipFunctionContinuous {
 	public String toStringFcl() {
 		return "GAUSS " + parameters[0] + " " + parameters[1];
 	}
+
+	@Override
+	public String toStringJS() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\t\treturn Math.exp(-(x - " + parameters[0] + ") * (x - " + parameters[0] + ") / (2 * " + parameters[1] + " * " + parameters[1] + "));\n");
+		return sb.toString();
+	}
 }

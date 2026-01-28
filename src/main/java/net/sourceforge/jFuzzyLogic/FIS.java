@@ -459,7 +459,11 @@ public class FIS extends FclObject implements Iterable<FunctionBlock>, CompileCp
 			}
 		}
 		out.append("];\n");
-		out.append("}");
+		out.append("}\n");
+
+		for (String name : fbNames) {
+			out.append("\nwindow.FunctionBlock_").append(name).append(" = FunctionBlock_").append(name).append(";");
+		}
 
 		return out.toString();
 	}
